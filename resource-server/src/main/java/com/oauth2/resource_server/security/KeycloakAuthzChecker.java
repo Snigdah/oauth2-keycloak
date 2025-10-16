@@ -1,4 +1,4 @@
-package com.oauth2.resource_server.config;
+package com.oauth2.resource_server.security;
 
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.representations.AccessTokenResponse;
