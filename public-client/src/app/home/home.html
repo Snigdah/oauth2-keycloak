@@ -1,8 +1,23 @@
 <div class="home-container">
-    <h1>Home Page</h1>
-    <div class="token-section">
-        <h3>Login successfull</h3>
-    </div>
-    <button (click)="logout()"
-        class="logout-btn">Logout</button>
+  <h1>Home Page</h1>
+  <div class="token-section">
+    <h3>Login successful</h3>
+  </div>
+
+  <button (click)="logout()" class="logout-btn">Logout</button>
+
+  <hr>
+
+  <div class="api-section">
+    <h2>API Calls</h2>
+
+    <button (click)="callGetApi()">GET Product</button>
+    <pre *ngIf="getResponse">{{ getResponse | json }}</pre>
+
+    <button (click)="callPostApi()">POST Product</button>
+    <pre *ngIf="postResponse">{{ postResponse | json }}</pre>
+
+    <button (click)="callDeleteApi()">DELETE Product</button>
+    <pre *ngIf="deleteResponse">{{ deleteResponse | json }}</pre>
+  </div>
 </div>

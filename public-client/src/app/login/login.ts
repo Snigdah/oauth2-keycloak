@@ -20,7 +20,6 @@ export class Login {
 
   async login(): Promise<void> {
     this.isLoading = true;
-    console.log("login clicked");
 
     await this.keycloakService.login();
   }

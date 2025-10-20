@@ -9,16 +9,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/product")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
 
     @GetMapping
     public ResponseEntity<?> getProducts() {
-        return ResponseEntity.ok("Products data");
+        return ResponseEntity.ok("Products Get API Working");
     }
 
     @PostMapping
     public ResponseEntity<?> createProduct() {
-        return ResponseEntity.ok("Product created");
+        return ResponseEntity.ok("Product Created API Working");
     }
 
     @DeleteMapping("/{id}")
