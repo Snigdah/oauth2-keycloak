@@ -55,7 +55,7 @@ public class KeycloakAuthorizationFilter extends OncePerRequestFilter {
             }
 
             if (!allowed) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied by Keycloak");
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access denied by Keycloak");
                 return;
             }
         }
