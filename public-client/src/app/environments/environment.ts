@@ -8,6 +8,6 @@ export const environment = {
   keycloak: {
     url: 'http://localhost:9080',
     realm: 'OneBank',
-    clientId: 'erp-app'
+    clientId: 'ERP-Frontend'
   }
 };
