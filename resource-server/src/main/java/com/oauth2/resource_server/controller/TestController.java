@@ -17,13 +17,9 @@ public class TestController {
         this.keycloakAuthzChecker = keycloakAuthzChecker;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<?> getTest(@AuthenticationPrincipal Jwt jwt){
-
+    @GetMapping("/accessible-resource")
+    public ResponseEntity<?> getAccessibleResources(@AuthenticationPrincipal Jwt jwt) {
         String accessToken = jwt.getTokenValue();
-//        boolean x =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:read");
-//        boolean z =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:create");
-
-        return ResponseEntity.ok("end point working");
+        return ResponseEntity.ok(keycloakAuthzChecker.getAccessibleResources(accessToken));
     }
 }
