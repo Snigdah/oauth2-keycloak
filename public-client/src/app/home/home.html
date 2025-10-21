@@ -1,23 +1,136 @@
 <div class="home-container">
-  <h1>Home Page</h1>
+  <header class="header">
+    <h1>API Testing Dashboard</h1>
+    <button (click)="logout()" class="logout-btn">
+      <span class="icon">🚪</span>
+      Logout
+    </button>
+  </header>
+
   <div class="token-section">
-    <h3>Login successful</h3>
+    <div class="status-card success">
+      <div class="status-content">
+        <h3>Authentication Successful</h3>
+      </div>
+    </div>
   </div>
 
-  <button (click)="logout()" class="logout-btn">Logout</button>
-
-  <hr>
-
   <div class="api-section">
-    <h2>API Calls</h2>
+    <h2>Product API Endpoints</h2>
+    
+    <div class="loading-spinner" *ngIf="loading">
+      <div class="spinner"></div>
+      <span>Processing request...</span>
+    </div>
 
-    <button (click)="callGetApi()">GET Product</button>
-    <pre *ngIf="getResponse">{{ getResponse | json }}</pre>
+    <!-- GET API Card -->
+    <div class="api-card">
+      <div class="api-header">
+        <span class="method get">GET</span>
+        <span class="endpoint">/api/product</span>
+        <button (click)="callGetApi()" class="api-btn" [disabled]="loading">
+          Execute
+        </button>
+      </div>
+      <div class="response-container" *ngIf="getResponse">
+        <div class="response-header" [class.success]="getResponse.success" [class.error]="!getResponse.success">
+          <span class="status-badge" [class.success]="getResponse.success" [class.error]="!getResponse.success">
+            {{ getResponse.success ? '200' : getResponse.status }}
+          </span>
+          <span class="response-type">{{ getResponse.success ? 'Success' : 'Error' }}</span>
+          <button (click)="clearResponse('get')" class="clear-btn" title="Clear response">
+            <span class="icon">×</span>
+          </button>
+        </div>
+        <div class="response-body" [class.success]="getResponse.success" [class.error]="!getResponse.success">
+          <div class="response-message">
+            {{ getResponse.message || getResponse.error }}
+          </div>
+          <div class="response-timestamp" *ngIf="!getResponse.success && getResponse.timestamp">
+            {{ getResponse.timestamp | date:'medium' }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <button (click)="callPostApi()">POST Product</button>
-    <pre *ngIf="postResponse">{{ postResponse | json }}</pre>
+    <!-- POST API Card -->
+    <div class="api-card">
+      <div class="api-header">
+        <span class="method post">POST</span>
+        <span class="endpoint">/api/product</span>
+        <button (click)="callPostApi()" class="api-btn" [disabled]="loading">
+          Execute
+        </button>
+      </div>
+      <div class="response-container" *ngIf="postResponse">
+        <div class="response-header" [class.success]="postResponse.success" [class.error]="!postResponse.success">
+          <span class="status-badge" [class.success]="postResponse.success" [class.error]="!postResponse.success">
+            {{ postResponse.success ? '200' : postResponse.status }}
+          </span>
+          <span class="response-type">{{ postResponse.success ? 'Success' : 'Error' }}</span>
+          <button (click)="clearResponse('post')" class="clear-btn" title="Clear response">
+            <span class="icon">×</span>
+          </button>
+        </div>
+        <div class="response-body" [class.success]="postResponse.success" [class.error]="!postResponse.success">
+          <div class="response-message">
+            {{ postResponse.message || postResponse.error }}
+          </div>
+          <div class="response-timestamp" *ngIf="!postResponse.success && postResponse.timestamp">
+            {{ postResponse.timestamp | date:'medium' }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <button (click)="callDeleteApi()">DELETE Product</button>
-    <pre *ngIf="deleteResponse">{{ deleteResponse | json }}</pre>
+    <!-- DELETE API Card -->
+    <div class="api-card">
+      <div class="api-header">
+        <span class="method delete">DELETE</span>
+        <span class="endpoint">/api/product/1</span>
+        <button (click)="callDeleteApi()" class="api-btn" [disabled]="loading">
+          Execute
+        </button>
+      </div>
+      <div class="response-container" *ngIf="deleteResponse">
+        <div class="response-header" [class.success]="deleteResponse.success" [class.error]="!deleteResponse.success">
+          <span class="status-badge" [class.success]="deleteResponse.success" [class.error]="!deleteResponse.success">
+            {{ deleteResponse.success ? '200' : deleteResponse.status }}
+          </span>
+          <span class="response-type">{{ deleteResponse.success ? 'Success' : 'Error' }}</span>
+          <button (click)="clearResponse('delete')" class="clear-btn" title="Clear response">
+            <span class="icon">×</span>
+          </button>
+        </div>
+        <div class="response-body" [class.success]="deleteResponse.success" [class.error]="!deleteResponse.success">
+          <div class="response-message">
+            {{ deleteResponse.message || deleteResponse.error }}
+          </div>
+          <div class="response-timestamp" *ngIf="!deleteResponse.success && deleteResponse.timestamp">
+            {{ deleteResponse.timestamp | date:'medium' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h3>Quick Actions</h3>
+    <div class="action-buttons">
+      <button (click)="callGetApi()" class="action-btn" [disabled]="loading">
+        Test GET
+      </button>
+      <button (click)="callPostApi()" class="action-btn" [disabled]="loading">
+        Test POST
+      </button>
+      <button (click)="callDeleteApi()" class="action-btn" [disabled]="loading">
+        Test DELETE
+      </button>
+      <button (click)="clearResponse('get'); clearResponse('post'); clearResponse('delete')" 
+              class="action-btn clear-all">
+        Clear All
+      </button>
+    </div>
   </div>
 </div>
