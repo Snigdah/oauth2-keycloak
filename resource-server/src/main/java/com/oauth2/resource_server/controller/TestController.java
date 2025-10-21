@@ -18,12 +18,11 @@ public class TestController {
     }
 
     @GetMapping("/test")
-    @PreAuthorize("hasRole('Student')")
     public ResponseEntity<?> getTest(@AuthenticationPrincipal Jwt jwt){
 
         String accessToken = jwt.getTokenValue();
-        boolean x =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:read");
-        boolean z =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:create");
+//        boolean x =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:read");
+//        boolean z =  keycloakAuthzChecker.hasPermission(accessToken, "Product Resource", "product:create");
 
         return ResponseEntity.ok("end point working");
     }
