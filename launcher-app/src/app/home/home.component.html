@@ -1,5 +1,20 @@
-<div class="container">
-  <h1>Welcome to the Unified Portal</h1>
-  <button (click)="goToOneBank()">Click for One Bank</button>
-  <button (click)="goToCityBank()">Click for City Bank</button>
+<div class="portal-wrapper">
+  <div class="container">
+    <h1>Welcome to the Unified Portal</h1>
+    <p class="subtitle">Select your destination</p>
+    
+    <div class="button-group">
+      <button class="portal-button" (click)="goToOneBank()">
+        <span class="button-icon">🏦</span>
+        <span class="button-text">City Bank</span>
+        <span class="button-arrow">→</span>
+      </button>
+      
+      <button class="portal-button" (click)="goToCityBank()">
+        <span class="button-icon">🏥</span>
+        <span class="button-text">City Hospital</span>
+        <span class="button-arrow">→</span>
+      </button>
+    </div>
+  </div>
 </div>

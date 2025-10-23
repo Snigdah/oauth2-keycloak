@@ -1,19 +1,133 @@
-.container {
+/* 🌌 Modern Minimal Futuristic Portal Style */
+.portal-wrapper {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0a0a0f, #121212, #1a1a1f);
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Container with glass look */
+.portal-wrapper .container {
   text-align: center;
-  margin-top: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 60px 80px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 1s ease-in-out;
 }
 
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
+/* Title gradient */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ffffff, #00d4ff, #ff00b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Portal buttons */
+.portal-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 500;
   cursor: pointer;
-  background-color: #1976d2;
-  color: white;
+  border: none;
+  color: #fff;
+  background: linear-gradient(135deg, #1a1a1f, #2b2b2f);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-button:hover {
-  background-color: #1565c0;
+.portal-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #ff00b8, #00d4ff);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  z-index: 0;
+}
+
+.portal-button:hover::before {
+  opacity: 0.25;
+  transform: translateX(30%);
+}
+
+.portal-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.portal-button:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #222, #2e2e33);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.2);
+}
+
+/* Icon and arrow animation */
+.button-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.portal-button:hover .button-icon {
+  transform: rotate(10deg);
+}
+
+.button-arrow {
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.3s ease;
+}
+
+.portal-button:hover .button-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
