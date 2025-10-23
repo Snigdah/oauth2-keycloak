@@ -29,8 +29,6 @@ export class App implements OnInit {
       // if (currentPath !== '/login') {
       //   this.router.navigate(['/login']);
       // }
-      console.log("**************************************");
-      
       await this.keycloakService.login();
     }
   }

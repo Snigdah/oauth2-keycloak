@@ -31,7 +31,7 @@ export class KeycloakService {
             pkceMethod: 'S256',
             checkLoginIframe: false
         });
-        
+
         return this._authenticated;
     }
 
@@ -41,7 +41,7 @@ export class KeycloakService {
         });
     }
 
-
+    
     logout(): void {
         this.keycloak.logout({
             redirectUri: 'http://localhost:4000'
