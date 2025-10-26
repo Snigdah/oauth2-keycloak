@@ -2,8 +2,6 @@ server:
   port: 8085
 
 spring:
-  config:
-    import: "classpath:authorization-mapping.yml"
   security:
     oauth2:
       resourceserver:
@@ -13,9 +11,9 @@ spring:
 keycloak:
   auth-server-url: http://localhost:9080
   realm: OneBank
-  resource: ERP-App
+  resource: confidential-client
   credentials:
-    secret: VywnDnjHVTLLm6C7jK7lEPokwraT6ERY
+    secret: m2ivCj5RJ66MLTyHlS6KHYzqZoy9Xfuz
   ssl-required: none
   confidential-port: 0
 

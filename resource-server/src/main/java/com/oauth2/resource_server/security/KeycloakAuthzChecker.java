@@ -20,7 +20,7 @@ public class KeycloakAuthzChecker {
     public boolean hasPermission(String accessToken, String resourceName, String scopeName) {
         try {
             AuthorizationRequest request = new AuthorizationRequest();
-            request.addPermission(resourceName, scopeName);
+            request.addPermission(resourceName.toLowerCase(), scopeName.toLowerCase());
             request.setSubjectToken(accessToken);
 
             AccessTokenResponse rpt = authzClient.authorization(accessToken).authorize(request);
