@@ -1,0 +1,16 @@
+authorization:
+  mappings:
+    - path: /api/order
+      method: GET
+      resource: Order Resource
+      scopes: order:read
+
+    - path: /api/order
+      method: POST
+      resource: Order Resource
+      scopes: order:create
+
+    - path: /api/order/{id}
+      method: DELETE
+      resource: Order Resource
+      scopes: order:delete
