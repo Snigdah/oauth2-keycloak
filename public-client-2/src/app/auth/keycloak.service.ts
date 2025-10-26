@@ -24,20 +24,30 @@ export class KeycloakService {
         return this._authenticated;
     }
 
-    async init(): Promise<boolean> {
+   async init(): Promise<boolean> {
         this._authenticated = await this.keycloak.init({
             onLoad: 'check-sso',
             // onLoad: 'login-required',
             pkceMethod: 'S256',
-            checkLoginIframe: false
+            checkLoginIframe: true,
+            checkLoginIframeInterval: 5
         });
+
+
+        // 🔔 Listen for global logout
+
+         this.keycloak.onAuthLogout = () => {
+            console.log('Detected logout from another client');
+            this.login();
+        };
+    
 
         return this._authenticated;
     }
 
     login(): void {
         this.keycloak.login({
-            redirectUri: window.location.origin + '/home'
+            redirectUri: window.location.origin + '/landing'
         });
     }
 

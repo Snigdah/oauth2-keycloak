@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
     providedIn: 'root'
 })
 export class KeycloakService {
-    private _keycloak: Keycloak | undefined;
+    public _keycloak: Keycloak | undefined;
     private _authenticated = false;
 
     get keycloak(): Keycloak {
@@ -29,15 +29,25 @@ export class KeycloakService {
             onLoad: 'check-sso',
             // onLoad: 'login-required',
             pkceMethod: 'S256',
-            checkLoginIframe: false
+            checkLoginIframe: true,
+            checkLoginIframeInterval: 5
         });
-        
+
+
+        // 🔔 Listen for global logout
+
+         this.keycloak.onAuthLogout = () => {
+            console.log('Detected logout from another client');
+            this.login();
+        };
+    
+
         return this._authenticated;
     }
 
     login(): void {
         this.keycloak.login({
-            redirectUri: window.location.origin + '/home'
+            redirectUri: window.location.origin + '/landing'
         });
     }
 
