@@ -1,11 +1,95 @@
 <div class="home-container">
-        <!-- Navbar loaded only on home page -->
+  <!-- Navbar -->
   <app-navbar></app-navbar>
 
-    <h1>Welcome To City Hospital</h1>
-    <div class="token-section">
-        <h3>Login successfull</h3>
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="welcome-badge">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="4" y="4" width="16" height="16" rx="2" ry="2" stroke-width="2"></rect>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8" />
+        </svg>
+        <span>Certified Healthcare Portal</span>
+      </div>
+
+      <h1 class="main-title">Welcome To City Hospital</h1>
+      <p class="subtitle" *ngIf="email">{{ email }}</p>
+      <p class="subtitle" *ngIf="!email">Your trusted partner in care and wellness</p>
+
+      <div class="success-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div class="success-content">
+          <h3>Login Successful</h3>
+          <p>You are securely connected to the hospital system</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 20v-6m0 0a2 2 0 01-2-2v-4a2 2 0 014 0v4a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div class="stat-info">
+             <p class="stat-label">Secure Session</p>
+            <p class="stat-value">{{ sessionActive ? 'Active' : 'Inactive' }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1 4h1m0 0V8a4 4 0 10-8 0v8a4 4 0 008 0z" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Patient Data</p>
+            <p class="stat-value">Encrypted</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Last Login</p>
+            <p class="stat-value">{{ lastLoginTime }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-primary">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3" />
+          </svg>
+          Dashboard
+        </button>
+
+        <button (click)="logout()" class="btn-logout">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Logout
+        </button>
+      </div>
     </div>
-    <button (click)="logout()"
-        class="logout-btn">Logout</button>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 City Hospital. All rights reserved.</p>
+  </div>
 </div>

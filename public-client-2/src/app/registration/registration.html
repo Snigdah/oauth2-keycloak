@@ -1,1 +1,86 @@
-<p>registration works!</p>
+<div class="registration-container">
+  <app-navbar></app-navbar>
+
+  <div class="registration-content">
+    <div class="form-wrapper">
+      
+      <!-- Left Side - Info -->
+      <div class="info-panel">
+        <div class="info-content">
+          <div class="logo-section">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+                   10-4.48 10-10S17.52 2 12 2zm1 5h-2v5H6v2h5v5h2v-5h5v-2h-5V7z" />
+            </svg>
+            <h2>City Hospital</h2>
+          </div>
+
+          <h1>Join Our Healthcare Family</h1>
+          <p class="info-subtitle">
+            Register today and get access to world-class healthcare services, doctors, and patient support.
+          </p>
+
+          <div class="features-list">
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M5 13l4 4L19 7" />
+              </svg>
+              <span>24/7 Online Consultation</span>
+            </div>
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Secure Health Records</span>
+            </div>
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Personalized Patient Care</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Registration Form -->
+      <div class="form-panel">
+        <h2>Create Your Account</h2>
+        <p class="form-subtitle">Fill out the details below to register</p>
+
+        <form>
+          <div class="input-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" placeholder="Dr. John Smith" required>
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@cityhospital.com" required>
+          </div>
+
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="********" required>
+          </div>
+
+          <div class="input-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="********" required>
+          </div>
+
+          <button type="submit" class="register-btn">Register Now</button>
+
+          <p class="login-link">
+            Already registered? <a href="/login">Sign in</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
