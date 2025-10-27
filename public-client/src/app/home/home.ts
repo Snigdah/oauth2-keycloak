@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from '../auth/keycloak.service';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Navbar],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

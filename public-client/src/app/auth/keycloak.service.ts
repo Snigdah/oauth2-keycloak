@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +10,7 @@ import { environment } from '../environments/environment';
 export class KeycloakService {
     public _keycloak: Keycloak | undefined;
     private _authenticated = false;
+    private http: HttpClient= inject(HttpClient);
 
     get keycloak(): Keycloak {
         if (!this._keycloak) {
@@ -60,6 +63,20 @@ export class KeycloakService {
 
     getToken(): string {
         return this.keycloak.token || '';
+    } 
+
+    getAccessibleResources(): Observable<any> {
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${this.getToken()}`, // pass Keycloak token
+        'x-client-id': '1' // city bank client id
+    });
+
+        return this.http.get('http://localhost:8085/test/accessible-resource', { headers });
     }
+
+    // 🔔 Plain fetch API
+//   getAccessibleResources(): Observable<any> {
+//     return this.http.get('http://localhost:8085/accessible-resource');
+//   }
 }
 

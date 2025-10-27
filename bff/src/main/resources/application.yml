@@ -1,0 +1,19 @@
+server:
+  port: 8085
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/OneBank
+
+keycloak:
+  auth-server-url: http://localhost:9080
+  realm: OneBank
+  resource: bff
+  credentials:
+    secret: VTF5RtMNWaN3mqdkLiFdCXszRNDTOwQ9
+  ssl-required: none
+  confidential-port: 0
+
