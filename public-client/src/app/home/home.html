@@ -82,6 +82,42 @@
     </div>
   </div>
 
+  <!-- =============================== -->
+  <!-- 🔒 Product API Test Zone -->
+  <!-- =============================== -->
+  <div class="api-test-section">
+    <h2>🔒 Product API Test Zone</h2>
+    <p>Click below to test secured Product API endpoints</p>
+
+    <div class="api-buttons">
+      <button class="btn-primary" (click)="testGet()">Test GET /product</button>
+      <button class="btn-primary" (click)="testPost()">Test POST /product</button>
+      <button class="btn-primary" (click)="testDelete()">Test DELETE /product/1</button>
+    </div>
+
+    <div class="api-result" *ngIf="apiMessage" [ngClass]="{'success': apiStatus === 'success', 'error': apiStatus === 'error'}">
+      {{ apiMessage }}
+    </div>
+  </div>
+
+  <!-- =============================== -->
+  <!-- 📦 Order API Test Zone -->
+  <!-- =============================== -->
+  <div class="api-test-section">
+    <h2>📦 Order API Test Zone</h2>
+    <p>Click below to test secured Order API endpoints</p>
+
+    <div class="api-buttons">
+      <button class="btn-primary" (click)="testOrderGet()">Test GET /api/order/1</button>
+      <button class="btn-primary" (click)="testOrderPost()">Test POST /api/order</button>
+      <button class="btn-primary" (click)="testOrderDelete()">Test DELETE /api/order/1</button>
+    </div>
+
+    <div class="api-result" *ngIf="orderApiMessage" [ngClass]="{'success': orderApiStatus === 'success', 'error': orderApiStatus === 'error'}">
+      {{ orderApiMessage }}
+    </div>
+  </div>
+
   <div class="footer">
     <p>© 2025 City Bank. All rights reserved.</p>
   </div>

@@ -73,10 +73,5 @@ export class KeycloakService {
 
         return this.http.get('http://localhost:8086/test/accessible-resource', { headers });
     }
-
-    // 🔔 Plain fetch API
-//   getAccessibleResources(): Observable<any> {
-//     return this.http.get('http://localhost:8085/accessible-resource');
-//   }
 }
 
