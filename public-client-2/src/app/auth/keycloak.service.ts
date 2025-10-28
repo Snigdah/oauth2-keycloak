@@ -71,7 +71,7 @@ export class KeycloakService {
         'x-client-id': '2' // city bank client id
     });
 
-        return this.http.get('http://localhost:8085/test/accessible-resource', { headers });
+        return this.http.get('http://localhost:8086/test/accessible-resource', { headers });
     }
 }
 
