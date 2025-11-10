@@ -6,9 +6,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9080/realms/OneBank
+          issuer-uri: http://localhost:8080/realms/OneBank
 keycloak:
-  server-url: http://localhost:9080
+  server-url: http://localhost:8080
   realm: OneBank
-  client-id: product
-  client-secret: 2WjkjMaaeNgqXOL7TjWXINJa1VLN9Lkw
+  client-id: Product
+  client-secret: A7zMEV2AyhSTGvWbyKKFlsadGjgCkioh
