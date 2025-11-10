@@ -4,18 +4,26 @@ import com.oauth2.resource_server.dto.ResourceDTO;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.ClientResource;
+import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.authorization.ResourceRepresentation;
+import org.keycloak.representations.idm.authorization.ScopeRepresentation;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static com.oauth2.resource_server.utils.KeycloakUtils.TARGET_REALM;
 
 @Service
 @RequiredArgsConstructor
 public class ResourceService {
 
-    private final Keycloak keycloak;
-    private final String TARGET_REALM = "OneBank"; // Your realm
-    private final String CLIENT_ID = "Product";    // Your client
+    private final Keycloak keycloak;// Your realm
+    private final String CLIENT_ID = "BFF";    // Your client
 
     private String getClientUUID() {
         return keycloak.realm(TARGET_REALM)
@@ -23,6 +31,13 @@ public class ResourceService {
                 .findByClientId(CLIENT_ID)
                 .get(0)
                 .getId();
+    }
+
+    private ClientResource getClient(String clientUUID) {
+        return keycloak.realm(TARGET_REALM)
+                .clients()
+                .get(clientUUID);
+
     }
 
     // Create Resource
@@ -74,6 +89,8 @@ public class ResourceService {
     // Update Resource
     public String updateResource(String resourceName, ResourceDTO dto) {
         String clientUUID = getClientUUID();
+        ClientResource client = getClient(clientUUID);
+
         List<ResourceRepresentation> resources = keycloak.realm(TARGET_REALM)
                 .clients()
                 .get(clientUUID)
@@ -87,6 +104,33 @@ public class ResourceService {
         if (dto.getDisplayName() != null) existing.setDisplayName(dto.getDisplayName());
         if (dto.getAttributes() != null) existing.setAttributes(dto.getAttributes());
         existing.setOwnerManagedAccess(dto.isOwnerManagedAccess());
+
+        if (dto.getScopes() != null && !dto.getScopes().isEmpty()) {
+            Set<ScopeRepresentation> updatedScopes = new HashSet<>();
+
+            for (String scopeName : dto.getScopes()) {
+                var auth = client.authorization();
+                List<ScopeRepresentation> foundScopes = Collections
+                        .singletonList(
+                                auth
+                                        .scopes()
+                                        .findByName(scopeName));
+                if (!ObjectUtils.isEmpty(foundScopes)) {
+                    updatedScopes.add(foundScopes.getFirst());
+                }
+                /*
+                //won't support this for now
+                else {
+                    // Optional: create the scope if it doesn't exist
+                    ScopeRepresentation newScope = new ScopeRepresentation();
+                    newScope.setName(scopeName);
+                    auth.scopes().create(newScope);
+                    updatedScopes.add(newScope);
+                }*/
+            }
+
+            existing.setScopes(updatedScopes);
+        }
 
         keycloak.realm(TARGET_REALM)
                 .clients()

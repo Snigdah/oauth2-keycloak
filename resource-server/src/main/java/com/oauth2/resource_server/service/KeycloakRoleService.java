@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.oauth2.resource_server.utils.KeycloakUtils.TARGET_REALM;
+
 @Service
 public class KeycloakRoleService {
 
     private final Keycloak keycloak;
     private final String realmName;
-    private final String TARGET_REALM="OneBank";
 
     public KeycloakRoleService(Keycloak keycloak, String realmName) {
         this.keycloak = keycloak;
