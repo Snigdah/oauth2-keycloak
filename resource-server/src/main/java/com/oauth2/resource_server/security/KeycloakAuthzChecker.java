@@ -3,9 +3,10 @@ package com.oauth2.resource_server.security;
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.authorization.AuthorizationRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component("kcAuth")
 public class KeycloakAuthzChecker {
 
     private final AuthzClient authzClient;
