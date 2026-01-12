@@ -17,9 +17,16 @@ public class ProductController {
         return ResponseEntity.ok("Products data");
     }
 
+    @PreAuthorize("hasRole('product.read')")
     @PostMapping
     public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok("Product created");
+    }
+
+    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read') or hasRole('product.read')")
+    @DeleteMapping
+    public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok("Delete data");
     }
 
 //
@@ -39,8 +46,8 @@ public class ProductController {
 //        return ResponseEntity.ok("Product created");
 //    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
-        return ResponseEntity.ok("Product deleted: " + id);
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteProduct(@PathVariable String id) {
+//        return ResponseEntity.ok("Product deleted: " + id);
+//    }
 }
