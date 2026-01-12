@@ -8,14 +8,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9080/realms/OneBank
+          issuer-uri: http://192.168.10.56:9080/realms/OneBank
 
 keycloak:
-  auth-server-url: http://localhost:9080
+  auth-server-url: http://192.168.10.56:9080
   realm: OneBank
-  resource: ERP-App
+  resource: Product
   credentials:
-    secret: VywnDnjHVTLLm6C7jK7lEPokwraT6ERY
+    secret: Sr7sK4bgeRtlZV6xcIJv5Wnfc6XK4vhO
   ssl-required: none
   confidential-port: 0
 
