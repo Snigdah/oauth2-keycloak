@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: inventory
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9080/realms/OneBank
+      client:
+        registration:
+          keycloak:
+            client-id: inventory
+            client-secret: client-secret
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak:
+            token-uri: http://localhost:9080/realms/OneBank/protocol/openid-connect/token
+
+product:
+  service:
+    url: http://localhost:8085
+
+server:
+  port: 8081
