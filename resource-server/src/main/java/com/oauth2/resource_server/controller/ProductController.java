@@ -1,5 +1,7 @@
 package com.oauth2.resource_server.controller;
 
+import com.oauth2.resource_server.dto.SecurityUserContext;
+import com.oauth2.resource_server.dto.UserContext;
 import com.oauth2.resource_server.security.KeycloakAuthzChecker;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,14 +21,10 @@ public class ProductController {
 
     @PreAuthorize("hasRole('product.read')")
     @PostMapping
-    public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt,
-                                           @RequestHeader(value = "X-User-Id", required = false) String userId,
-                                           @RequestHeader(value = "X-Username", required = false) String username,
-                                           @RequestHeader(value = "X-User-Email", required = false) String email,
-                                           @RequestHeader(value = "X-Employee-Id", required = false) String employeeId,
-                                           @RequestHeader(value = "X-Org-Id", required = false) String orgId,
-                                           @RequestHeader(value = "X-Office-Id", required = false) String officeId,
-                                           @RequestHeader(value = "X-User-Terminal-IP", required = false) String terminalIp) {
+    public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt) {
+        UserContext ctx = SecurityUserContext.get();
+        assert ctx != null;
+        System.out.println(ctx.getUsername());
         return ResponseEntity.ok("Product created");
     }
 
