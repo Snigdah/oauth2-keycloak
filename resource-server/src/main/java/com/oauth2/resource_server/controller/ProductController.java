@@ -19,7 +19,14 @@ public class ProductController {
 
     @PreAuthorize("hasRole('product.read')")
     @PostMapping
-    public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt,
+                                           @RequestHeader(value = "X-User-Id", required = false) String userId,
+                                           @RequestHeader(value = "X-Username", required = false) String username,
+                                           @RequestHeader(value = "X-User-Email", required = false) String email,
+                                           @RequestHeader(value = "X-Employee-Id", required = false) String employeeId,
+                                           @RequestHeader(value = "X-Org-Id", required = false) String orgId,
+                                           @RequestHeader(value = "X-Office-Id", required = false) String officeId,
+                                           @RequestHeader(value = "X-User-Terminal-IP", required = false) String terminalIp) {
         return ResponseEntity.ok("Product created");
     }
 

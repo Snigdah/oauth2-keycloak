@@ -1,7 +1,10 @@
 package com.example.inventory.config;
 
 
+import com.example.inventory.dto.TokenClaimResponse;
+import com.example.inventory.utils.TokenClaimUtils;
 import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -53,7 +56,35 @@ public class FeignOAuth2Config {
                     HttpHeaders.AUTHORIZATION,
                     "Bearer " + token
             );
+
+            TokenClaimResponse claims = TokenClaimUtils.extractAllClaims();
+            if (claims == null) {
+                return;
+            }
+
+            addHeader(requestTemplate, "X-User-Id", claims.getId());
+            addHeader(requestTemplate, "X-Username", claims.getUsername());
+            addHeader(requestTemplate, "X-User-Email", claims.getEmail());
+            addHeader(requestTemplate, "X-User-FullName", claims.getFullName());
+            addHeader(requestTemplate, "X-Employee-Id", claims.getEmployeeId());
+            addHeader(requestTemplate, "X-Org-Id", claims.getOrgId());
+            addHeader(requestTemplate, "X-Office-Id", claims.getOfficeId());
+            addHeader(requestTemplate, "X-Screen-Lock-Time", claims.getScreenLockTime());
+            addHeader(requestTemplate, "X-ClickStream-Track", claims.getClickStreamTrack());
+
+            if (claims.getUserTerminalIP() != null && !claims.getUserTerminalIP().isEmpty()) {
+                requestTemplate.header(
+                        "X-User-Terminal-IP",
+                        String.join(",", claims.getUserTerminalIP())
+                );
+            }
         };
+    }
+
+    private void addHeader(RequestTemplate template, String name, String value) {
+        if (value != null && !value.isBlank()) {
+            template.header(name, value);
+        }
     }
 }
 

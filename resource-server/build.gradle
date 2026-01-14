@@ -29,6 +29,8 @@ dependencies {
 
 	// Added this for resource check
 	implementation 'org.keycloak:keycloak-authz-client:26.0.7'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
