@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/product")
 public class ProductController {
 
-    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read')")
+    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource')")
     @GetMapping
     public ResponseEntity<?> getProducts(@AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok("Products data");
@@ -28,7 +28,7 @@ public class ProductController {
         return ResponseEntity.ok("Product created");
     }
 
-    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read') or hasRole('product.read')")
+    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource') or hasRole('product.read')")
     @DeleteMapping
     public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.ok("Delete data");

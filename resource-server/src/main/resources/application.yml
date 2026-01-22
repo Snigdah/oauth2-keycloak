@@ -13,9 +13,9 @@ spring:
 keycloak:
   auth-server-url: http://192.168.10.56:9080
   realm: OneBank
-  resource: Product
+  resource: inventory
   credentials:
-    secret: Sr7sK4bgeRtlZV6xcIJv5Wnfc6XK4vhO
+    secret: 3VMMRoeytzGte4ea0pgEfu5vqsqAMYAW
   ssl-required: none
   confidential-port: 0
 

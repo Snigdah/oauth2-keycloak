@@ -18,10 +18,25 @@ public class KeycloakAuthzChecker {
     /**
      * Ask Keycloak for permission for a resource + scope, passing the user's token as subject_token.
      */
-    public boolean hasPermission(String accessToken, String resourceName, String scopeName) {
+    public boolean hasPermissionWithScope(String accessToken, String resourceName, String scopeName) {
         try {
             AuthorizationRequest request = new AuthorizationRequest();
             request.addPermission(resourceName, scopeName);
+            request.setSubjectToken(accessToken);
+
+            AccessTokenResponse rpt = authzClient.authorization(accessToken).authorize(request);
+
+            return rpt != null && rpt.getToken() != null;
+        } catch (Exception e) {
+            // For debugging, log e.getMessage(); but in prod consider specific handling
+            return false;
+        }
+    }
+
+    public boolean hasPermission(String accessToken, String resourceName) {
+        try {
+            AuthorizationRequest request = new AuthorizationRequest();
+            request.addPermission(resourceName);
             request.setSubjectToken(accessToken);
 
             AccessTokenResponse rpt = authzClient.authorization(accessToken).authorize(request);
