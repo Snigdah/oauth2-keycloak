@@ -10,7 +10,7 @@ spring:
         registration:
           keycloak:
             client-id: inventory
-            client-secret: client-secret
+            client-secret: X2DjZuSBYxcV85Nhs9hoEmING0fVvjuf
             authorization-grant-type: client_credentials
             scope: openid
         provider:
