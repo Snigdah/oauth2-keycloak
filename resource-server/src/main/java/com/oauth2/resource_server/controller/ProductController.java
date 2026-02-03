@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/product")
 public class ProductController {
 
-//    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read')")
-//    @GetMapping
-//    public ResponseEntity<?> getProducts(@AuthenticationPrincipal Jwt jwt) {
-//        return ResponseEntity.ok("Products data");
-//    }
-//
+    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read')")
+    @GetMapping
+    public ResponseEntity<?> getProducts(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok("Products data");
+    }
+
 //    @PreAuthorize("hasRole('product.read')")
 //    @PostMapping
 //    public ResponseEntity<?> createProduct(@AuthenticationPrincipal Jwt jwt) {
 //        return ResponseEntity.ok("Product created");
 //    }
 //
-//    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:read') or hasRole('product.read')")
+//    @PreAuthorize("@kcAuth.hasPermission(#jwt.tokenValue, 'Product Resource', 'product:delete') or hasRole('product.read')")
 //    @DeleteMapping
 //    public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt) {
 //        return ResponseEntity.ok("Delete data");
@@ -36,16 +36,16 @@ public class ProductController {
 //        return ResponseEntity.ok("Product created");
 //    }
 
-    @GetMapping
-        public ResponseEntity<?> getProducts() {
-        return ResponseEntity.ok("Products data");
-    }
-
-    @PostMapping
-    public ResponseEntity<?> createProduct() {
-        return ResponseEntity.ok("Product created");
-    }
-
+//    @GetMapping
+//        public ResponseEntity<?> getProducts() {
+//        return ResponseEntity.ok("Products data");
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<?> createProduct() {
+//        return ResponseEntity.ok("Product created");
+//    }
+//
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable String id) {
         return ResponseEntity.ok("Product deleted: " + id);

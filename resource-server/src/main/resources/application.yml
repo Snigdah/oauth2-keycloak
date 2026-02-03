@@ -1,3 +1,7 @@
+app:
+  security:
+    mode: MIXED
+
 server:
   port: 8085
 

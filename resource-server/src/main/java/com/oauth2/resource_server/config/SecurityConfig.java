@@ -1,6 +1,8 @@
 package com.oauth2.resource_server.config;
 
 import com.oauth2.resource_server.security.KeycloakRoleConverter;
+import com.oauth2.resource_server.security.SecurityMode;
+import com.oauth2.resource_server.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -13,8 +15,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    private final SecurityProperties props;
+
+    public SecurityConfig(SecurityProperties props) {
+        this.props = props;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        if (props.getMode() == SecurityMode.NONE) {
+            http.authorizeHttpRequests(auth ->
+                            auth.anyRequest().permitAll())
+                    .csrf(csrf -> csrf.disable());
+            return http.build();
+        }
+
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v3/**", "/swagger-ui/**").permitAll()
