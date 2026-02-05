@@ -17,14 +17,4 @@ keycloak:
     secret: 3VMMRoeytzGte4ea0pgEfu5vqsqAMYAW
   lazy-load-paths: true
   enforcement-mode: ENFORCING
-  paths:
-    - path: /product/create/today
-      methods:
-        - method: GET
-          scopes:
-            - "product:create"
-    - path: /product/read/history
-      methods:
-        - method: GET
-          scopes:
-            - "product:read"
+  http-method-as-scope: true

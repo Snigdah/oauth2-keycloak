@@ -10,9 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import jakarta.servlet.Filter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Configuration
 @EnableConfigurationProperties(KeycloakProperties.class)
 @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true")
@@ -66,21 +63,12 @@ public class KeycloakPolicyEnforcerConfig {
             pec.setLazyLoadPaths(props.getLazyLoadPaths());
         }
 
-        List<PolicyEnforcerConfig.PathConfig> pathConfigs = new ArrayList<>();
-        for (KeycloakProperties.PathEntry pe : props.getPaths()) {
-            PolicyEnforcerConfig.PathConfig pathConfig = new PolicyEnforcerConfig.PathConfig();
-            pathConfig.setPath(pe.getPath());
-            List<PolicyEnforcerConfig.MethodConfig> methodConfigs = new ArrayList<>();
-            for (KeycloakProperties.MethodEntry me : pe.getMethods()) {
-                PolicyEnforcerConfig.MethodConfig mc = new PolicyEnforcerConfig.MethodConfig();
-                mc.setMethod(me.getMethod());
-                mc.setScopes(me.getScopes() != null ? me.getScopes() : List.of());
-                methodConfigs.add(mc);
-            }
-            pathConfig.setMethods(methodConfigs);
-            pathConfigs.add(pathConfig);
+        // Enable http-method-as-scope: scopes are derived from HTTP methods (GET, POST,
+        // PUT, DELETE)
+        if (props.getHttpMethodAsScope() != null) {
+            pec.setHttpMethodAsScope(props.getHttpMethodAsScope());
         }
-        pec.setPaths(pathConfigs);
+
         return pec;
     }
 }
