@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: order
+
+  security:
+    oauth2:
+
+      # Resource Server (for incoming JWT validation)
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.10.56:9080/realms/OneBank
+
+      client:
+        registration:
+          keycloak:
+            client-id: Order
+            client-secret: GYep2I6xSeTM9fh31QrBYJC7NBz107jd
+            authorization-grant-type: client_credentials
+            scope: openid
+            provider: keycloak
+
+        provider:
+          keycloak:
+            issuer-uri: http://192.168.10.56:9080/realms/OneBank
+
+resource:
+  server:
+    url: http://localhost:8085
+
+server:
+  port: 8081
