@@ -20,21 +20,21 @@ public class KeycloakRoleConverter
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         Map<String, Object> resourceAccess =
-                jwt.getClaim("resource_access");
+                jwt.getClaim("realm_access");
 
         if (resourceAccess == null) {
             return authorities;
         }
 
-        Map<String, Object> product =
-                (Map<String, Object>) resourceAccess.get("Product");
-
-        if (product == null) {
-            return authorities;
-        }
+//        Map<String, Object> product =
+//                (Map<String, Object>) resourceAccess.get("Product");
+//
+//        if (product == null) {
+//            return authorities;
+//        }
 
         List<String> roles =
-                (List<String>) product.get("roles");
+                (List<String>) resourceAccess.get("roles");
 
         if (roles == null) {
             return authorities;

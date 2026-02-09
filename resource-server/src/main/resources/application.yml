@@ -18,3 +18,7 @@ keycloak:
   lazy-load-paths: true
   enforcement-mode: ENFORCING
   http-method-as-scope: true
+
+  paths:
+    # 🔓 ROLE-ONLY (NO PEP, NO DB)
+    - path: /product/update
