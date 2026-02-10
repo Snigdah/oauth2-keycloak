@@ -26,6 +26,6 @@ public class ProductController {
         assert ctx != null;
         System.out.println(ctx.getUsername());
 
-        return ResponseEntity.ok("product/delete - bob only");
+        return ResponseEntity.ok("client only");
     }
 }

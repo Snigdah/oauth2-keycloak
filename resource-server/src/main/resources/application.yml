@@ -18,3 +18,7 @@ keycloak:
   lazy-load-paths: true
   enforcement-mode: ENFORCING
   http-method-as-scope: true
+
+  paths:
+    # public endpoints (NO PEP)
+    - path: /v3/test

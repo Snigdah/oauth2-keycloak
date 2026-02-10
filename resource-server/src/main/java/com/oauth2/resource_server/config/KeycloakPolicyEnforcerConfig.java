@@ -1,6 +1,7 @@
 package com.oauth2.resource_server.config;
 
 import org.keycloak.adapters.authorization.PolicyEnforcer;
+import org.keycloak.adapters.authorization.integration.jakarta.ServletPolicyEnforcerFilter;
 import org.keycloak.representations.adapters.config.AdapterConfig;
 import org.keycloak.representations.adapters.config.PolicyEnforcerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,63 +11,81 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import jakarta.servlet.Filter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableConfigurationProperties(KeycloakProperties.class)
 @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true")
 public class KeycloakPolicyEnforcerConfig {
 
     @Bean
-    @ConditionalOnProperty(name = "keycloak.enabled", havingValue = "true")
     public FilterRegistrationBean<Filter> keycloakPolicyEnforcerFilter(KeycloakProperties props) {
         org.keycloak.adapters.authorization.spi.ConfigurationResolver resolver = request -> buildPolicyEnforcerConfig(
                 props);
 
-        org.keycloak.adapters.authorization.integration.jakarta.ServletPolicyEnforcerFilter filter = new org.keycloak.adapters.authorization.integration.jakarta.ServletPolicyEnforcerFilter(
-                resolver);
-        FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
+        ServletPolicyEnforcerFilter filter =
+                new ServletPolicyEnforcerFilter(resolver);
+
+        FilterRegistrationBean<Filter> bean =
+                new FilterRegistrationBean<>(filter);
+
+        // 🔥 PEP is active, but paths control WHERE it applies
         bean.addUrlPatterns("/*");
         bean.setOrder(1);
         return bean;
     }
 
-    private AdapterConfig buildAdapterConfig(KeycloakProperties props) {
-        AdapterConfig adapterConfig = new AdapterConfig();
-        adapterConfig.setRealm(props.getRealm());
-        adapterConfig.setAuthServerUrl(props.getAuthServerUrl());
-        adapterConfig.setResource(props.getResource());
-
-        // Set credentials
-        if (props.getCredentials() != null && props.getCredentials().getSecret() != null) {
-            adapterConfig.setCredentials(new java.util.HashMap<>());
-            adapterConfig.getCredentials().put("secret", props.getCredentials().getSecret());
-        }
-
-        return adapterConfig;
-    }
-
     private PolicyEnforcerConfig buildPolicyEnforcerConfig(KeycloakProperties props) {
+
         PolicyEnforcerConfig pec = new PolicyEnforcerConfig();
 
-        // CRITICAL: Set the AdapterConfig so PolicyEnforcer knows how to connect to
-        // Keycloak
         pec.setAuthServerUrl(props.getAuthServerUrl());
         pec.setRealm(props.getRealm());
         pec.setResource(props.getResource());
-        if (props.getCredentials() != null && props.getCredentials().getSecret() != null) {
+
+        if (props.getCredentials() != null &&
+                props.getCredentials().getSecret() != null) {
+
             pec.setCredentials(new java.util.HashMap<>());
-            pec.getCredentials().put("secret", props.getCredentials().getSecret());
+            pec.getCredentials().put(
+                    "secret",
+                    props.getCredentials().getSecret()
+            );
         }
 
-        pec.setEnforcementMode(PolicyEnforcerConfig.EnforcementMode.valueOf(
-                (props.getEnforcementMode() != null ? props.getEnforcementMode() : "ENFORCING").toUpperCase()));
-        if (props.getLazyLoadPaths() != null) {
-            pec.setLazyLoadPaths(props.getLazyLoadPaths());
-        }
+        // 🔥 GLOBAL DEFAULT → PEP ENABLED
+        pec.setEnforcementMode(
+                PolicyEnforcerConfig.EnforcementMode.valueOf(
+                        props.getEnforcementMode().toUpperCase() // ENFORCING
+                )
+        );
 
-        // Enable http-method-as-scope: scopes are derived from HTTP methods (GET, POST,
-        // PUT, DELETE)
-        if (props.getHttpMethodAsScope() != null) {
-            pec.setHttpMethodAsScope(props.getHttpMethodAsScope());
+        pec.setLazyLoadPaths(props.getLazyLoadPaths());
+        pec.setHttpMethodAsScope(props.getHttpMethodAsScope());
+
+        // 🔓 ONLY EXCLUSIONS ARE CONFIGURED HERE
+        if (props.getPaths() != null && !props.getPaths().isEmpty()) {
+
+            List<PolicyEnforcerConfig.PathConfig> pathConfigs =
+                    new ArrayList<>();
+
+            for (KeycloakProperties.PathEntry p : props.getPaths()) {
+
+                PolicyEnforcerConfig.PathConfig pathConfig =
+                        new PolicyEnforcerConfig.PathConfig();
+
+                pathConfig.setPath(p.getPath());
+
+                // 🔥 EXPLICITLY DISABLE PEP FOR THESE PATHS
+                pathConfig.setEnforcementMode(
+                        PolicyEnforcerConfig.EnforcementMode.DISABLED
+                );
+
+                pathConfigs.add(pathConfig);
+            }
+
+            pec.setPaths(pathConfigs);
         }
 
         return pec;
