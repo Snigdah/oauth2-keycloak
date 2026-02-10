@@ -1,5 +1,7 @@
 package com.oauth2.resource_server.controller;
 
+import com.oauth2.resource_server.dto.SecurityUserContext;
+import com.oauth2.resource_server.dto.UserContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,10 @@ public class ProductController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteProduct() {
-        return ResponseEntity.ok("product/delete - bob only");
-    }
+        UserContext ctx = SecurityUserContext.get();
+        assert ctx != null;
+        System.out.println(ctx.getUsername());
 
-    @PutMapping("/update")
-    @PreAuthorize("hasRole('manager')")
-    public ResponseEntity<String> patchTest() {
-        return ResponseEntity.ok("client access");
+        return ResponseEntity.ok("product/delete - bob only");
     }
 }
